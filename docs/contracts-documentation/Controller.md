@@ -50,7 +50,7 @@ Contract that controls the Gamma Protocol and the interaction of all sub contrac
 
 - `getPayout(address _otoken, uint256 _amount) (public)`
 
-- `isSettlementAllowed(address _otoken) (public)`
+- `isSettlementAllowed(address _underlying, address _strike, address _collateral, uint256 _expiry) (public)`
 
 - `getAccountVaultCounter(address _accountOwner) (external)`
 
@@ -80,7 +80,7 @@ Contract that controls the Gamma Protocol and the interaction of all sub contrac
 
 - `_settleVault(struct Actions.SettleVaultArgs _args) (internal)`
 
-- `_call(struct Actions.CallArgs _args, uint256 _ethLeft) (internal)`
+- `_call(struct Actions.CallArgs _args) (internal)`
 
 - `_checkVaultId(address _accountOwner, uint256 _vaultId) (internal)`
 
@@ -110,17 +110,17 @@ Contract that controls the Gamma Protocol and the interaction of all sub contrac
 
 - `Redeem(address otoken, address redeemer, address receiver, address collateralAsset, uint256 otokenBurned, uint256 payout)`
 
-- `VaultSettled(address AccountOwner, address to, uint256 vaultId, uint256 payout)`
+- `VaultSettled(address AccountOwner, address to, address otoken, uint256 vaultId, uint256 payout)`
 
-- `CallExecuted(address from, address to, address vaultOwner, uint256 vaultId, bytes data)`
+- `CallExecuted(address from, address to, bytes data)`
 
 - `FullPauserUpdated(address oldFullPauser, address newFullPauser)`
 
 - `PartialPauserUpdated(address oldPartialPauser, address newPartialPauser)`
 
-- `SystemPartiallyPaused(bool isActive)`
+- `SystemPartiallyPaused(bool isPaused)`
 
-- `SystemFullyPaused(bool isActive)`
+- `SystemFullyPaused(bool isPaused)`
 
 - `CallRestricted(bool isRestricted)`
 
@@ -320,13 +320,19 @@ get an oToken's payout/cash value after expiry, in the collateral asset
 
 - amount of collateral to pay out
 
-### Function `isSettlementAllowed(address _otoken) → bool public`
+### Function `isSettlementAllowed(address _underlying, address _strike, address _collateral, uint256 _expiry) → bool public`
 
 return if an expired oToken contract’s settlement price has been finalized
 
 #### Parameters:
 
-- `_otoken`: address of the oToken
+- `_underlying`: oToken underlying asset
+
+- `_strike`: oToken strike asset
+
+- `_collateral`: oToken collateral asset
+
+- `_expiry`: otoken expiry timestamp
 
 #### Return Values:
 
@@ -490,7 +496,7 @@ deletes a vault of vaultId after net proceeds/collateral is removed, cannot be c
 
 - `_args`: SettleVaultArgs structure
 
-### Function `_call(struct Actions.CallArgs _args, uint256 _ethLeft) → uint256 internal`
+### Function `_call(struct Actions.CallArgs _args) → uint256 internal`
 
 execute arbitrary calls
 
@@ -499,8 +505,6 @@ cannot be called when system is partiallyPaused or fullyPaused
 #### Parameters:
 
 - `_args`: Call action
-
-- `_ethLeft`: amount of eth left for this call.
 
 ### Function `_checkVaultId(address _accountOwner, uint256 _vaultId) → bool internal`
 
@@ -570,11 +574,11 @@ emits an event when a short oToken is burned
 
 emits an event when an oToken is redeemed
 
-### Event `VaultSettled(address AccountOwner, address to, uint256 vaultId, uint256 payout)`
+### Event `VaultSettled(address AccountOwner, address to, address otoken, uint256 vaultId, uint256 payout)`
 
 emits an event when a vault is settled
 
-### Event `CallExecuted(address from, address to, address vaultOwner, uint256 vaultId, bytes data)`
+### Event `CallExecuted(address from, address to, bytes data)`
 
 emits an event when a call action is executed
 
@@ -586,11 +590,11 @@ emits an event when the fullPauser address changes
 
 emits an event when the partialPauser address changes
 
-### Event `SystemPartiallyPaused(bool isActive)`
+### Event `SystemPartiallyPaused(bool isPaused)`
 
 emits an event when the system partial paused status changes
 
-### Event `SystemFullyPaused(bool isActive)`
+### Event `SystemFullyPaused(bool isPaused)`
 
 emits an event when the system fully paused status changes
 

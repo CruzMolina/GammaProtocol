@@ -11,12 +11,13 @@
   * [OtokenSpawner](docs/contracts-documentation/OtokenSpawner.md)
   * [Whitelist](docs/contracts-documentation/Whitelist.md)
   * external
+    * callees
+      * [PermitCallee](docs/contracts-documentation/external/callees/PermitCallee.md)
+      * [Trade0x](docs/contracts-documentation/external/callees/Trade0x.md)
     * canonical-weth
       * [WETH9](docs/contracts-documentation/external/canonical-weth/WETH9.md)
     * proxies
       * [PayableProxyController](docs/contracts-documentation/external/proxies/PayableProxyController.md)
-    * wrapper
-      * [FlashWrap](docs/contracts-documentation/external/wrapper/FlashWrap.md)
   * libs
     * [Actions](docs/contracts-documentation/libs/Actions.md)
     * [FixedPointInt256](docs/contracts-documentation/libs/FixedPointInt256.md)
@@ -25,4 +26,4 @@
   * pricers
     * [ChainlinkPricer](docs/contracts-documentation/pricers/ChainlinkPricer.md)
     * [CompoundPricer](docs/contracts-documentation/pricers/CompoundPricer.md)
-    * [USDCPricer](docs/contracts-documentation/pricers/USDCPricer.md)
+    * [UniswapV2Pricer](docs/contracts-documentation/pricers/UniswapV2Pricer.md)

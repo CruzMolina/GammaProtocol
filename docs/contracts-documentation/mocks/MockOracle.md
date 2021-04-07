@@ -38,6 +38,8 @@ The MockOracle contract let us easily manipulate the oracle state in testings.
 
 - `setDisputePeriod(address _pricer, uint256 _disputePeriod) (external)`
 
+- `setStablePrice(address _asset, uint256 _price) (external)`
+
 ### Function `setRealTimePrice(address _asset, uint256 _price) external`
 
 ### Function `getPrice(address _asset) → uint256 external`
@@ -69,3 +71,5 @@ The MockOracle contract let us easily manipulate the oracle state in testings.
 ### Function `setLockingPeriod(address _pricer, uint256 _lockingPeriod) external`
 
 ### Function `setDisputePeriod(address _pricer, uint256 _disputePeriod) external`
+
+### Function `setStablePrice(address _asset, uint256 _price) external`
