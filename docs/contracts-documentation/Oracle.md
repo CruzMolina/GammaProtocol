@@ -30,6 +30,8 @@ manages pricers that are used for different assets
 
 - `setDisputer(address _disputer) (external)`
 
+- `setStablePrice(address _asset, uint256 _price) (external)`
+
 - `disputeExpiryPrice(address _asset, uint256 _expiryTimestamp, uint256 _price) (external)`
 
 - `setExpiryPrice(address _asset, uint256 _expiryTimestamp, uint256 _price) (external)`
@@ -48,6 +50,8 @@ manages pricers that are used for different assets
 
 - `ExpiryPriceDisputed(address asset, uint256 expiryTimestamp, uint256 disputedPrice, uint256 newPrice, uint256 disputeTimestamp)`
 
+- `StablePriceUpdated(address asset, uint256 price)`
+
 ### Function `getPrice(address _asset) → uint256 external`
 
 get a live asset price from the asset's pricer contract
@@ -60,7 +64,7 @@ get a live asset price from the asset's pricer contract
 
 - price scaled by 1e8, denominated in USD
 
-e.g. 17368900000 => 175.689 USD
+e.g. 17568900000 => 175.689 USD
 
 ### Function `getExpiryPrice(address _asset, uint256 _expiryTimestamp) → uint256, bool external`
 
@@ -212,11 +216,23 @@ can only be called by the owner
 
 - `_disputer`: disputer address
 
+### Function `setStablePrice(address _asset, uint256 _price) external`
+
+set stable asset price
+
+price should be scaled by 1e8
+
+#### Parameters:
+
+- `_asset`: asset address
+
+- `_price`: price
+
 ### Function `disputeExpiryPrice(address _asset, uint256 _expiryTimestamp, uint256 _price) external`
 
 dispute an asset price during the dispute period
 
-only the owner can dispute a price during the dispute period, by setting a new one
+only the disputer can dispute a price during the dispute period, by setting a new one
 
 #### Parameters:
 
@@ -263,3 +279,7 @@ emits an event when an expiry price is updated for a specific asset
 ### Event `ExpiryPriceDisputed(address asset, uint256 expiryTimestamp, uint256 disputedPrice, uint256 newPrice, uint256 disputeTimestamp)`
 
 emits an event when the disputer disputes a price during the dispute period
+
+### Event `StablePriceUpdated(address asset, uint256 price)`
+
+emits an event when a stable asset price changes

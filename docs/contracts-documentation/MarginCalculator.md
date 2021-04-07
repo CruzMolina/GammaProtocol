@@ -4,15 +4,15 @@ Calculator module that checks if a given vault is valid, calculates margin requi
 
 ## Functions:
 
-- `constructor(address _addressBook) (public)`
+- `constructor(address _oracle) (public)`
 
 - `getExpiredPayoutRate(address _otoken) (external)`
 
 - `getExcessCollateral(struct MarginVault.Vault _vault) (public)`
 
-- `_getExpiredCashValue(address _otoken) (internal)`
+- `_getExpiredCashValue(address _underlying, address _strike, uint256 _expiryTimestamp, uint256 _strikePrice, bool _isPut) (internal)`
 
-- `_getMarginRequired(struct MarginVault.Vault _vault) (internal)`
+- `_getMarginRequired(struct MarginVault.Vault _vault, struct MarginCalculator.VaultDetails _vaultDetails) (internal)`
 
 - `_getPutSpreadMarginRequired(struct FixedPointInt256.FixedPointInt _shortAmount, struct FixedPointInt256.FixedPointInt _longAmount, struct FixedPointInt256.FixedPointInt _shortStrike, struct FixedPointInt256.FixedPointInt _longStrike) (internal)`
 
@@ -20,11 +20,11 @@ Calculator module that checks if a given vault is valid, calculates margin requi
 
 - `_getExpiredSpreadCashValue(struct FixedPointInt256.FixedPointInt _shortAmount, struct FixedPointInt256.FixedPointInt _longAmount, struct FixedPointInt256.FixedPointInt _shortCashValue, struct FixedPointInt256.FixedPointInt _longCashValue) (internal)`
 
-- `_checkIsValidVault(struct MarginVault.Vault _vault) (internal)`
+- `_checkIsValidVault(struct MarginVault.Vault _vault, struct MarginCalculator.VaultDetails _vaultDetails) (internal)`
 
-- `_isMarginableLong(struct MarginVault.Vault _vault) (internal)`
+- `_isMarginableLong(struct MarginVault.Vault _vault, struct MarginCalculator.VaultDetails _vaultDetails) (internal)`
 
-- `_isMarginableCollateral(struct MarginVault.Vault _vault) (internal)`
+- `_isMarginableCollateral(struct MarginVault.Vault _vault, struct MarginCalculator.VaultDetails _vaultDetails) (internal)`
 
 - `_convertAmountOnLivePrice(struct FixedPointInt256.FixedPointInt _amount, address _assetA, address _assetB) (internal)`
 
@@ -32,7 +32,9 @@ Calculator module that checks if a given vault is valid, calculates margin requi
 
 - `_isNotEmpty(address[] _assets) (internal)`
 
-### Function `constructor(address _addressBook) public`
+- `getVaultDetails(struct MarginVault.Vault _vault) (internal)`
+
+### Function `constructor(address _oracle) public`
 
 ### Function `getExpiredPayoutRate(address _otoken) → uint256 external`
 
@@ -66,7 +68,7 @@ return amount is denominated in the collateral asset for the oToken in the vault
 
 if True, collateral can be taken out from the vault, if False, additional collateral needs to be added to vault
 
-### Function `_getExpiredCashValue(address _otoken) → struct FixedPointInt256.FixedPointInt internal`
+### Function `_getExpiredCashValue(address _underlying, address _strike, uint256 _expiryTimestamp, uint256 _strikePrice, bool _isPut) → struct FixedPointInt256.FixedPointInt internal`
 
 return the cash value of an expired oToken, denominated in strike asset
 
@@ -76,13 +78,21 @@ for a put, return Max(0, otoken.strikePrice - underlyingPriceInStrike)
 
 #### Parameters:
 
-- `_otoken`: oToken address
+- `_underlying`: otoken underlying asset
+
+- `_strike`: otoken strike asset
+
+- `_expiryTimestamp`: otoken expiry timestamp
+
+- `_strikePrice`: otoken strike price
+
+- `_strikePrice`: true if otoken is put otherwise false
 
 #### Return Values:
 
 - cash value of an expired otoken, denominated in the strike asset
 
-### Function `_getMarginRequired(struct MarginVault.Vault _vault) → struct FixedPointInt256.FixedPointInt internal`
+### Function `_getMarginRequired(struct MarginVault.Vault _vault, struct MarginCalculator.VaultDetails _vaultDetails) → struct FixedPointInt256.FixedPointInt internal`
 
 calculate the amount of collateral needed for a vault
 
@@ -132,7 +142,7 @@ Formula: net = (short cash value * short amount) - ( long cash value * long Amou
 
 - cash value obligation denominated in the strike asset
 
-### Function `_checkIsValidVault(struct MarginVault.Vault _vault) internal`
+### Function `_checkIsValidVault(struct MarginVault.Vault _vault, struct MarginCalculator.VaultDetails _vaultDetails) internal`
 
 ensure that:
 
@@ -150,7 +160,7 @@ e) long option and collateral asset is acceptable for margin with short asset
 
 - `_vault`: the vault to check
 
-### Function `_isMarginableLong(struct MarginVault.Vault _vault) → bool internal`
+### Function `_isMarginableLong(struct MarginVault.Vault _vault, struct MarginCalculator.VaultDetails _vaultDetails) → bool internal`
 
 if there is a short option and a long option in the vault, ensure that the long option is able to be used as collateral for the short option
 
@@ -158,7 +168,7 @@ if there is a short option and a long option in the vault, ensure that the long 
 
 - `_vault`: the vault to check.
 
-### Function `_isMarginableCollateral(struct MarginVault.Vault _vault) → bool internal`
+### Function `_isMarginableCollateral(struct MarginVault.Vault _vault, struct MarginCalculator.VaultDetails _vaultDetails) → bool internal`
 
 if there is short option and collateral asset in the vault, ensure that the collateral asset is valid for the short option
 
@@ -209,3 +219,5 @@ check if asset array contain a token address
 #### Return Values:
 
 - True if the array is not empty
+
+### Function `getVaultDetails(struct MarginVault.Vault _vault) → struct MarginCalculator.VaultDetails internal`

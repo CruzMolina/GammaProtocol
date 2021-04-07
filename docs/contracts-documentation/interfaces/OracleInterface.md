@@ -8,6 +8,8 @@
 
 - `getExpiryPrice(address _asset, uint256 _expiryTimestamp) (external)`
 
+- `getDisputer() (external)`
+
 - `getPricer(address _asset) (external)`
 
 - `getPrice(address _asset) (external)`
@@ -26,11 +28,15 @@
 
 - `disputeExpiryPrice(address _asset, uint256 _expiryTimestamp, uint256 _price) (external)`
 
+- `setDisputer(address _disputer) (external)`
+
 ### Function `isLockingPeriodOver(address _asset, uint256 _expiryTimestamp) → bool external`
 
 ### Function `isDisputePeriodOver(address _asset, uint256 _expiryTimestamp) → bool external`
 
 ### Function `getExpiryPrice(address _asset, uint256 _expiryTimestamp) → uint256, bool external`
+
+### Function `getDisputer() → address external`
 
 ### Function `getPricer(address _asset) → address external`
 
@@ -49,3 +55,5 @@
 ### Function `setExpiryPrice(address _asset, uint256 _expiryTimestamp, uint256 _price) external`
 
 ### Function `disputeExpiryPrice(address _asset, uint256 _expiryTimestamp, uint256 _price) external`
+
+### Function `setDisputer(address _disputer) external`

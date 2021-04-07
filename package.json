@@ -28,6 +28,7 @@
     "lint-staged": "^9.5.0",
     "prettier": "^1.19.1",
     "prettier-plugin-solidity": "^1.0.0-alpha.54",
+    "sol2uml": "^1.1.25",
     "solhint": "3.0.0",
     "solhint-plugin-prettier": "0.0.4",
     "solidity-coverage": "0.7.5",
@@ -126,7 +127,7 @@
   "homepage": "https://github.com/opynfinance/GammaProtocol#readme",
   "dependencies": {
     "@truffle/hdwallet-provider": "^1.0.44",
-    "solc-0.6.10": "npm:solc@^0.6.10",
+    "solc-0.6.10": "npm:solc@0.6.10",
     "solidity-docgen": "^0.5.6",
     "yargs": "^13.2.4"
   }
