@@ -104,6 +104,23 @@ Transaction hash: 0xebf12fc6603ee857bcabe1c0c6194XX82639a9888776f7ff6e83a409XXXX
 Deployed contract address: 0x669cC97687c792fc5369d7bdd38cXXXXXXXXXX
 ```
 
+### UniswapV2 Pricer Deployment
+
+To deploy a new `UniswapV2Pricer.sol`, it is recommended to use the `deployUniswapV2Pricer` truffle script inside the `scripts` folder.
+
+**Input**
+```sh
+truffle exec scripts/deployUniswapV2Pricer.js --network mainnet --bot 0x7d78c401c69c56cb21f4bf80c53afd92be0BBBBB --asset 0xc02aaa39b223fe8d0a0e5c4f27ead9083c7AAaaa --priceEmitter 0x5f4eC3Df9cbd43714FE2740f5E3616155cAGAGAG --oracle 0xef196aA0e3Cb8EA6d5720557C3B611Eff6OOOOOO --uniswapV2Pair 0xACa94ef8bD5ffEE41947b4585a84BdA5a3d3EAEE --denominationToken 0x1dF62f291b2E969fB0849d99D9Ce41e2000000 --gas 50000000000
+```
+
+**Output**
+```sh
+Deploying UniswapV2 pricer contract on mainnet 🍕
+UniswapV2 pricer deployed! 🎉
+Transaction hash: 0xebf12fc6603ee857bcabe1c0c6194XX82639a9888776f7ff6e83a409XXXXXXXX
+Deployed contract address: 0x669cC97687c792fc5369d7bdd38cXXXXXXXXXX
+```
+
 ### Permit Callee Deployment
 
 The `PermitCallee.sol` contract allow user to call `permit()` function through the Controller Call action.
